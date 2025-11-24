@@ -1,0 +1,48 @@
+{% if bookings %}
+    <table>
+        <thead>
+            <tr>
+                {% if current_user.role == 'admin' %}
+                    <th>Customer</th>
+                {% endif %}
+                <th>Service</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Address</th>
+                <th>Details</th>
+                <th>Status</th>
+                {% if current_user.role != 'admin' %}
+                    <th>Action</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr {% if booking.status == 'Canceled' %}style="background-color:#f8d7da;"{% endif %}>
+                {% if current_user.role == 'admin' %}
+                    <td>{{ booking.user.name }}</td>
+                {% endif %}
+                <td>{{ booking.service }}</td>
+                <td>{{ booking.date.strftime('%b %d, %Y') }}</td>
+                <td>{{ booking.time_slot }}</td>
+                <td>{{ booking.address }}</td>
+                <td>{{ booking.details }}</td>
+                <td>{{ booking.status }}</td>
+                {% if current_user.role != 'admin' %}
+                    <td>
+                        {% if booking.status != 'Canceled' and booking.date >= today %}
+                        <form method="POST" action="{{ url_for('bookings.cancel', booking_id=booking.id) }}">
+                            <button type="submit">Cancel</button>
+                        </form>
+                        {% else %}
+                        <button disabled>Canceled</button>
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No bookings found.</p>
+{% endif %}

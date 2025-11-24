@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>New Booking</h2>
+
+<form method="POST">
+
+    <label>Service Type</label>
+    <select name="service" required>
+        <option value="">-- Select Service --</option>
+        <option value="HVAC Repair">HVAC Repair</option>
+        <option value="AC Maintenance">AC Maintenance</option>
+        <option value="Heater Replacement">Heater Replacement</option>
+        <option value="Plumbing Repair">Plumbing Repair</option>
+        <option value="General Maintenance">General Maintenance</option>
+    </select>
+
+    <label>Date</label>
+    <input type="date" name="date" min="{{ min_date }}" required>
+
+    <label>Time Slot</label>
+    <select name="time_slot" required>
+        <option value="">-- Select a Time --</option>
+        <option value="8 AM - 12 PM">8 AM - 12 PM</option>
+        <option value="2 PM - 6 PM">2 PM - 6 PM</option>
+    </select>
+
+    <label>Address</label>
+    <input type="text" name="address" placeholder="Enter service address" required>
+
+    <label>Description</label>
+    <textarea name="details" placeholder="Describe the issue" required></textarea>
+
+    <label>Phone Number (SMS Reminder)</label>
+    <input type="text" name="phone" placeholder="+1XXXXXXXXXX" required>
+
+    <button type="submit">Book Appointment</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ComfortPro</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        nav { background: #333; padding: 10px; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        nav ul li { margin-right: 15px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: bold; }
+        nav ul li a:hover { text-decoration: underline; }
+        .container { padding: 20px; }
+        .services { display: flex; gap: 10px; margin-top: 20px; }
+        .services .card { display: block; padding: 15px; background: #eee; border: 1px solid #ccc; text-align: center; text-decoration: none; color: #333; border-radius: 5px; }
+        .services .card:hover { background: #ddd; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('main.index') }}">Home</a></li>
+
+            {% if current_user.is_authenticated %}
+                {% if current_user.role != 'admin' %}
+                    <li><a href="{{ url_for('bookings.new_booking') }}">Book Appointment</a></li>
+                {% endif %}
+
+                <li><a href="{{ url_for('bookings.my_bookings') }}">My Bookings</a></li>
+
+                {% if current_user.role == 'admin' %}
+                    <li><a href="{{ url_for('bookings.my_bookings') }}">All Bookings (Admin)</a></li>
+                {% endif %}
+
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div style="margin-bottom:10px; padding:10px; border:1px solid #ccc; background:#f9f9f9;">
+                        <strong>{{ category.capitalize() }}:</strong> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to HVAC</h1>
+<p>Book HVAC, plumbing, and maintenance services quickly.</p>
+
+{% if current_user.is_authenticated and current_user.role != 'admin' %}
+<div class="services">
+    <a class="card" href="{{ url_for('bookings.new_booking') }}">Book HVAC Repair</a>
+    <a class="card" href="{{ url_for('bookings.new_booking') }}">Book Plumbing Repair</a>
+    <a class="card" href="{{ url_for('bookings.new_booking') }}">Maintenance Check</a>
+</div>
+{% else %}
+<p>Please log in to book an appointment.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Receipts</h2>
+
+<a href="{{ url_for('receipts.new_receipt') }}">Create New Receipt</a>
+
+<ul>
+    {% for rec in receipts %}
+        <li>
+            <a href="{{ url_for('receipts.view_receipt', receipt_id=rec.id) }}">
+                Receipt #{{ rec.id }} - {{ rec.to }} ({{ rec.date }})
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

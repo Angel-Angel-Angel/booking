@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    role = db.Column(db.String(20), default="user")  # NEW: role field, "user" or "admin"
+    role = db.Column(db.String(20), default="user")
 
     def __repr__(self):
         return f"<User {self.email}, role={self.role}>"
@@ -30,3 +30,24 @@ class Booking(db.Model):
 
     def __repr__(self):
         return f"<Booking {self.service} {self.date} {self.time_slot}>"
+
+class Receipt(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    date = db.Column(db.String(50))
+    to = db.Column(db.String(120))
+    phone = db.Column(db.String(50))
+    work_performed_at = db.Column(db.String(200))
+    address = db.Column(db.String(200))
+
+    description = db.Column(db.Text)
+    price = db.Column(db.Float)
+    total = db.Column(db.Float)
+
+    terms = db.Column(db.Text)
+
+    signature_name = db.Column(db.String(100))
+    signature_date = db.Column(db.String(50))
+
+    created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+

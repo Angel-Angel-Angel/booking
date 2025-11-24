@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Service Receipt</h2>
+
+<p><strong>Date:</strong> {{ r.date }}</p>
+<p><strong>To:</strong> {{ r.to }}</p>
+<p><strong>Phone:</strong> {{ r.phone }}</p>
+<p><strong>Work performed at:</strong> {{ r.work_performed_at }}</p>
+<p><strong>Address:</strong> {{ r.address }}</p>
+
+<hr>
+
+<h3>Project Description</h3>
+<p>{{ r.description }}</p>
+
+<p><strong>Price:</strong> ${{ "%.2f"|format(r.price) }}</p>
+<p><strong>Total:</strong> ${{ "%.2f"|format(r.total) }}</p>
+
+<hr>
+
+<h3>Terms & Conditions</h3>
+<p>{{ r.terms }}</p>
+
+<hr>
+
+<h3>Acceptance</h3>
+<p><strong>Signature:</strong> {{ r.signature_name }}</p>
+<p><strong>Date Signed:</strong> {{ r.signature_date }}</p>
+
+<br>
+
+<a href="{{ url_for('receipts.list_receipts') }}">Back</a>
+{% endblock %}
